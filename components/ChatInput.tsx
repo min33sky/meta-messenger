@@ -6,6 +6,7 @@ import { Message } from '../typings';
 import useSWR from 'swr';
 import fetcher from '../utils/fetchMessages';
 import { Session } from 'next-auth';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   session: Session | null;
@@ -21,7 +22,7 @@ export default function ChatInput({ session }: Props) {
 
   const addMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!text || !text.trim()) return;
+    if (!text || !text.trim() || !session) return;
 
     const id = uuid();
 
@@ -29,10 +30,9 @@ export default function ChatInput({ session }: Props) {
       id,
       message: text,
       createdAt: Date.now(),
-      username: 'test',
-      profilePic:
-        'https://ac-p2.namu.la/20220403sac/784cf3736ac11a9f07f38cd6c4b47745bf94ffde7f5c5fd8318950514c7d6f15.png',
-      email: 'test@test.com',
+      username: session?.user?.name!,
+      profilePic: session?.user?.image!,
+      email: session?.user?.email!,
     };
 
     const uploadMessageToUpstash = async () => {

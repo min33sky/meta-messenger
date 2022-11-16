@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['ac-p2.namu.la'],
+    domains: ['ac-p2.namu.la', 'platform-lookaside.fbsbx.com'],
   },
 };
 

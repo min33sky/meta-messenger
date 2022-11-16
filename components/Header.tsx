@@ -16,7 +16,7 @@ export default async function Header() {
           <div className="flex space-x-2">
             <div>
               <Image
-                src={'/logo-Meta.png'}
+                src={session.user?.image!}
                 className="mx-2 rounded-full object-contain"
                 width={50}
                 height={10}
@@ -24,8 +24,8 @@ export default async function Header() {
               />
             </div>
             <div>
-              <p className="text-blue-400">Logged in as:</p>
-              <p className="text-lg font-bold">Meeeeeee</p>
+              <p className="text-blue-400">로그인 한 계정 : </p>
+              <p className="text-lg font-bold">{session.user?.name}</p>
             </div>
           </div>
           <LogoutButton />
