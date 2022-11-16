@@ -5,8 +5,13 @@ import { v4 as uuid } from 'uuid';
 import { Message } from '../typings';
 import useSWR from 'swr';
 import fetcher from '../utils/fetchMessages';
+import { Session } from 'next-auth';
 
-export default function ChatInput() {
+interface Props {
+  session: Session | null;
+}
+
+export default function ChatInput({ session }: Props) {
   const [text, setText] = useState('');
   const { data: messages, error, mutate } = useSWR('/api/getMessages', fetcher);
 
@@ -57,6 +62,7 @@ export default function ChatInput() {
       className="fixed bottom-0 z-50 flex w-full space-x-2 border-t border-slate-500 bg-slate-800 px-10 py-5"
     >
       <input
+        disabled={!session}
         type="text"
         className="flex-1 rounded-md border border-gray-300 px-5 py-3 text-slate-800 outline-none
         focus:border-transparent focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
