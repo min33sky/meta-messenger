@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React from 'react';
 import { Message as MessageType } from '../typings';
@@ -11,7 +12,8 @@ export default function Message({
   profilePic,
   email,
 }: Props) {
-  const isUser = false;
+  const { data: session } = useSession();
+  const isUser = session?.user?.email === email;
 
   return (
     <article className={`flex w-fit  ${isUser && 'ml-auto'}`}>
